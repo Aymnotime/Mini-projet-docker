@@ -17,7 +17,9 @@ def home():
         
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
-
+        
+        cursor.execute("ALTER TABLE users AUTO_INCREMENT = 1")
+        conn.commit()
         
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS users (
@@ -26,11 +28,10 @@ def home():
             )
         """)
 
-        # Insérer un utilisateur test
         cursor.execute("INSERT INTO users (name) VALUES ('The Aym')")
         conn.commit()
 
-        # Récupérer les utilisateurs
+
         cursor.execute("SELECT * FROM users")
         users = cursor.fetchall()
 
