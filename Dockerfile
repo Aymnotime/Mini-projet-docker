@@ -1,9 +1,17 @@
-FROM ubuntu:latest
+# Utilisation de l'image Python officielle
+FROM python:3.9
 
+# Définir le répertoire de travail
+WORKDIR /app
 
-RUN apt-get update && \
-    apt-get install -y mysql-client && \
-    rm -rf /var/lib/apt/lists/*
+# Copier le fichier de l'application
+COPY app.py app.py
 
+# Installer Flask et le connecteur MySQL directement
+RUN pip install flask mysql-connector-python
 
-CMD ["bash"]
+# Exposer le port 5000
+EXPOSE 5000
+
+# Commande pour lancer l'application Flask
+CMD ["python", "app.py"]
